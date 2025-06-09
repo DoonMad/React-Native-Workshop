@@ -1,33 +1,34 @@
+import { API_KEY } from '@env';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import React, { useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 
 const WeatherDetails = () => {
   const {city} = useLocalSearchParams();
-//   const [weather, setWeather] = useState(null);
+  const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
-  const weather = {"base": "stations", "clouds": {"all": 9}, "cod": 200, "coord": {"lat": 19.8833, "lon": 75.3333}, "dt": 1749459661, "id": 1278149, "main": {"feels_like": 38.08, "grnd_level": 936, "humidity": 30, "pressure": 1004, "sea_level": 1004, "temp": 37.2, "temp_max": 37.2, "temp_min": 37.2}, "name": "Aurangabad", "sys": {"country": "IN", "sunrise": 1749428335, "sunset": 1749476226}, "timezone": 19800, "visibility": 10000, "weather": [{"description": "clear sky", "icon": "01d", "id": 800, "main": "Clear"}], "wind": {"deg": 321, "gust": 6.14, "speed": 6.74}}
+  // const weather = {"base": "stations", "clouds": {"all": 9}, "cod": 200, "coord": {"lat": 19.8833, "lon": 75.3333}, "dt": 1749459661, "id": 1278149, "main": {"feels_like": 38.08, "grnd_level": 936, "humidity": 30, "pressure": 1004, "sea_level": 1004, "temp": 37.2, "temp_max": 37.2, "temp_min": 37.2}, "name": "Aurangabad", "sys": {"country": "IN", "sunrise": 1749428335, "sunset": 1749476226}, "timezone": 19800, "visibility": 10000, "weather": [{"description": "clear sky", "icon": "02d", "id": 800, "main": "Clear"}], "wind": {"deg": 321, "gust": 6.14, "speed": 6.74}}
 
-//   useEffect(() => {
-//     if (city) {
-//       const getWeather = async () => {
-//         try {
-//           const response = await fetch(
-//             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-//           );
-//           const data = await response.json();
-//           setWeather(data);
-//           console.log(data);
-//         } catch (error) {
-//           console.error('Error fetching weather:', error);
-//         } finally {
-//           setLoading(false);
-//         }
-//       };
-//       getWeather();
-//     }
-//   }, [city]);
+  useEffect(() => {
+    if (city) {
+      const getWeather = async () => {
+        try {
+          const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+          );
+          const data = await response.json();
+          setWeather(data);
+          console.log(data);
+        } catch (error) {
+          console.error('Error fetching weather:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      getWeather();
+    }
+  }, [city]);
 
 
   return (
@@ -40,18 +41,25 @@ const WeatherDetails = () => {
 
       {loading ? (
         <ActivityIndicator size="large" color="#007AFF" />
-      ) : weather!=null ? (
+      ) : weather!=null? (
         <View style={styles.card}>
-          <Text style={styles.city}>{weather.name}</Text>
-          <Text style={styles.temp}>{weather.main.temp}°C</Text>
-          <Text style={styles.desc}>{weather.weather[0].description}</Text>
-          <View style={styles.row}>
-            <Text style={styles.label}>Humidity: </Text>
-            <Text style={styles.value}>{weather.main.humidity}%</Text>
+          {/* <Text style={styles.city}>{weather.name}</Text> */}
+          <View>
+            <Text style={styles.temp}>{weather.main.temp}°C</Text>
+            <Text style={styles.desc}>{weather.weather[0].description}</Text>
+            <View style={styles.row}>
+                <Text style={styles.label}>Humidity: </Text>
+                <Text style={styles.value}>{weather.main.humidity}%</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={styles.label}>Wind: </Text>
+                <Text style={styles.value}>{weather.wind.speed} m/s</Text>
+            </View>
           </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Wind: </Text>
-            <Text style={styles.value}>{weather.wind.speed} m/s</Text>
+          <View>
+            <Image source={{uri:`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}} 
+                style={styles.image}
+            />
           </View>
         </View>
       ) : (
@@ -68,19 +76,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E0F7FA', // Light blue theme
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     padding: 20,
   },
   card: {
-    backgroundColor: '#ffffff',
+    // backgroundColor: '#ffffff',
     padding: 25,
-    borderRadius: 16,
+    // borderRadius: 16,
     width: '100%',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
+    // alignItems: 'flex-start',
+    justifyContent: 'space-around',
+    // display: 'flex'
+    flexDirection: 'row',
+    // shadowColor: '#000',
+    // shadowOpacity: 0.1,
+    // shadowRadius: 10,
+    // elevation: 5,
   },
   city: {
     fontSize: 28,
@@ -97,17 +108,21 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginBottom: 20,
     textTransform: 'capitalize',
+    color: '#fff',
   },
   row: {
     flexDirection: 'row',
     marginVertical: 5,
+    color: '#fff',
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
+    color: '#fff',
   },
   value: {
     fontSize: 16,
+    color: '#fff',
   },
   background: {
     position: 'absolute',
@@ -116,4 +131,8 @@ const styles = StyleSheet.create({
     top: 0,
     height: 300,
   },
+  image: {
+    width: 100,
+    height: 100,
+  }
 });
