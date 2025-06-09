@@ -1,51 +1,72 @@
-import { API_KEY } from '@env';
-import * as Location from 'expo-location';
 import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { ActivityIndicator, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { useState } from 'react';
+import { ActivityIndicator, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { getCityFromCoords, requestLocationPermission } from '../api/weather';
 
 export default function Index() {
   const [city, setCity] = useState('');
-  const [location, setLocation] = useState<Location.LocationObject>();
-  const [errorMsg, setErrorMsg] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
+  const handleGetLocationWeather = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const location = await requestLocationPermission();
+      console.log(location.coords.latitude, location.coords.longitude);
+      const cityName = await getCityFromCoords(location.coords.latitude, location.coords.longitude);
+      console.log(cityName);
+      router.push(`/${cityName}`);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      let loc = await Location.getCurrentPositionAsync({});
-      setLocation(loc);
-
-      // Reverse geocode to get city
-      const geoRes = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${loc.coords.latitude}&lon=${loc.coords.longitude}&limit=1&appid=${API_KEY}`);
-      const geoData = await geoRes.json();
-      console.log(geoData)
-
-      if (geoData?.[0]?.name) {
-        router.push(`/${geoData[0].name}`);
-      } else {
-        setErrorMsg('Could not determine your city');
-      }
-    })();
-  }, []);
-
-  if (errorMsg) return <Text>{errorMsg}</Text>;
-  if (!location) return <ActivityIndicator size="large" color="blue" />;
+  const handleSearch = () => {
+    if (!city.trim()) {
+      setError('Please enter a city name');
+      return;
+    }
+    router.push(`/${city.trim()}`);
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>🌤️ Weather App</Text>
+      
+      <TouchableOpacity 
+        style={styles.locationButton}
+        onPress={handleGetLocationWeather}
+        disabled={loading}
+      >
+        <Icon name="crosshairs-gps" size={20} color="#fff" />
+        <Text style={styles.locationButtonText}>
+          {loading ? 'Detecting Location...' : 'Use My Current Location'}
+        </Text>
+      </TouchableOpacity>
+      
+      <Text style={styles.orText}>- OR -</Text>
+      
       <TextInput
         style={styles.input}
         value={city}
         onChangeText={setCity}
-        placeholder="Enter your city"
+        placeholder="Enter city name"
+        placeholderTextColor="#999"
+        onSubmitEditing={handleSearch}
       />
-      <Button title="Get Weather" onPress={() => router.push(`/${city}`)} />
+      
+      <Button 
+        title="Search" 
+        onPress={handleSearch} 
+        disabled={loading}
+      />
+      
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {loading ? <ActivityIndicator size="large" style={styles.loader} /> : null}
     </View>
   );
 }
@@ -53,23 +74,53 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#cceeff',
+    backgroundColor: '#f5fcff',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 24
+    marginBottom: 30,
+    color: '#333'
   },
   input: {
     borderWidth: 1,
-    borderColor: '#555',
+    borderColor: '#ddd',
     width: '100%',
-    padding: 10,
-    marginBottom: 16,
+    padding: 15,
+    marginBottom: 20,
     borderRadius: 8,
-    backgroundColor: 'white'
+    backgroundColor: '#fff',
+    fontSize: 16
+  },
+  locationButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1a73e8',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 20,
+    width: '100%',
+    justifyContent: 'center'
+  },
+  locationButtonText: {
+    color: '#fff',
+    marginLeft: 10,
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  orText: {
+    marginVertical: 15,
+    color: '#666'
+  },
+  errorText: {
+    color: '#e74c3c',
+    marginTop: 20,
+    textAlign: 'center'
+  },
+  loader: {
+    marginTop: 20
   }
 });

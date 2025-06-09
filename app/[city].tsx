@@ -1,124 +1,96 @@
-import { API_KEY } from '@env';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { fetchWeatherByCity, WeatherData } from '../api/weather';
 
 const WeatherDetails = () => {
   const { city } = useLocalSearchParams();
-  const [loading, setLoading] = useState(false);
-  const [weather, setWeather] = useState(null);
-
-  
-  // Mock data - replace with your API call
-  // const weather = {
-  //   "base": "stations",
-  //   "clouds": {"all": 9},
-  //   "cod": 200,
-  //   "coord": {"lat": 19.8833, "lon": 75.3333},
-  //   "dt": 1749459661,
-  //   "id": 1278149,
-  //   "main": {
-  //     "feels_like": 38.08,
-  //     "grnd_level": 936,
-  //     "humidity": 30,
-  //     "pressure": 1004,
-  //     "sea_level": 1004,
-  //     "temp": 37.2,
-  //     "temp_max": 37.2,
-  //     "temp_min": 37.2
-  //   },
-  //   "name": "Aurangabad",
-  //   "sys": {
-  //     "country": "IN",
-  //     "sunrise": 1749428335,
-  //     "sunset": 1749476226
-  //   },
-  //   "timezone": 19800,
-  //   "visibility": 10000,
-  //   "weather": [{
-  //     "description": "clear sky",
-  //     "icon": "02d",
-  //     "id": 800,
-  //     "main": "Clear"
-  //   }],
-  //   "wind": {
-  //     "deg": 321,
-  //     "gust": 6.14,
-  //     "speed": 6.74
-  //   }
-  // };
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (city) {
-      const getWeather = async () => {
-        try {
-          const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-          );
-          const data = await response.json();
-          setWeather(data);
-          console.log(data);
-        } catch (error) {
-          console.error('Error fetching weather:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      getWeather();
-    }
+    const loadWeather = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const data = await fetchWeatherByCity(city as string);
+        setWeather(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadWeather();
   }, [city]);
 
-  // Helper to format time
   const formatTime = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  const handleRefresh = () => {
+    router.replace(`/${city}`);
+  };
+
+  if (loading) {
+    return (
+      <LinearGradient colors={['#1a73e8', '#6ec6ff']} style={styles.container}>
+        <ActivityIndicator size="large" color="#fff" />
+      </LinearGradient>
+    );
+  }
+
+  if (error) {
+    return (
+      <LinearGradient colors={['#1a73e8', '#6ec6ff']} style={styles.container}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+          <Icon name="refresh" size={20} color="#fff" />
+          <Text style={styles.refreshText}>Try Again</Text>
+        </TouchableOpacity>
+      </LinearGradient>
+    );
+  }
+
   return (
-    <LinearGradient 
-      colors={['#1a73e8', '#6ec6ff']} 
-      style={styles.container}
-    >
+    <LinearGradient colors={['#1a73e8', '#6ec6ff']} style={styles.container}>
       <Stack.Screen 
         options={{
-          title: 'Weather in ' + city.toString().toUpperCase(),
+          title: `Weather in ${city.toString().toUpperCase()}`,
           headerStyle: { backgroundColor: '#1a73e8' },
           headerTintColor: '#fff',
         }}
       />
 
-      {loading ? (
-        <ActivityIndicator size="large" color="#fff" />
-      ) : weather ? (
-        <View style={styles.content}>
-          {/* Location and Date */}
-          <View style={styles.locationContainer}>
-            <Text style={styles.city}>{weather.name}, {weather.sys.country}</Text>
-            <Text style={styles.date}>
-              {new Date(weather.dt * 1000).toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' })}
-            </Text>
-          </View>
+      <View style={styles.content}>
+        <View style={styles.locationContainer}>
+          <Text style={styles.city}>{weather.name}, {weather.sys.country}</Text>
+          <Text style={styles.date}>
+            {new Date(weather.dt * 1000).toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' })}
+          </Text>
+        </View>
 
-          {/* Main Weather Info */}
-          <View style={styles.weatherMain}>
-            <View style={styles.tempContainer}>
-              <Text style={styles.temp}>{Math.round(weather.main.temp)}°</Text>
-              <Text style={styles.feelsLike}>Feels like {Math.round(weather.main.feels_like)}°</Text>
-            </View>
-            
-            <View style={styles.weatherIcon}>
-              <Image 
-                source={{uri: `https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}} 
-                style={styles.weatherImage}
-              />
-              <Text style={styles.desc}>{weather.weather[0].description}</Text>
-            </View>
+        <View style={styles.weatherMain}>
+          <View style={styles.tempContainer}>
+            <Text style={styles.temp}>{Math.round(weather.main.temp)}°</Text>
+            <Text style={styles.feelsLike}>Feels like {Math.round(weather.main.feels_like)}°</Text>
           </View>
+          
+          <View style={styles.weatherIcon}>
+            <Image 
+              source={{uri: `https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`}} 
+              style={styles.weatherImage}
+            />
+            <Text style={styles.desc}>{weather.weather[0].description}</Text>
+          </View>
+        </View>
 
-          {/* Weather Details */}
-          <View style={styles.detailsCard}>
-            <View style={styles.detailRow}>
+        <View style={styles.detailsCard}>
+          <View style={styles.detailRow}>
               <View style={styles.detailItem}>
                 <Icon name="water" size={24} color="#4cc9f0" />
                 <Text style={styles.detailValue}>{weather.main.humidity}%</Text>
@@ -156,11 +128,13 @@ const WeatherDetails = () => {
                 <Text style={styles.sunTimeText}>Sunset: {formatTime(weather.sys.sunset)}</Text>
               </View>
             </View>
-          </View>
         </View>
-      ) : (
-        <Text style={styles.errorText}>City not found.</Text>
-      )}
+
+        <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+          <Icon name="refresh" size={20} color="#fff" />
+          <Text style={styles.refreshText}>Refresh</Text>
+        </TouchableOpacity>
+      </View>
     </LinearGradient>
   );
 };
@@ -259,10 +233,28 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginLeft: 5,
   },
+  // errorText: {
+  //   color: '#fff',
+  //   fontSize: 18,
+  //   textAlign: 'center',
+  // },
+  refreshButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    padding: 10,
+  },
+  refreshText: {
+    color: '#fff',
+    marginLeft: 5,
+    fontSize: 16,
+  },
   errorText: {
     color: '#fff',
     fontSize: 18,
     textAlign: 'center',
+    marginBottom: 20,
   },
 });
 
