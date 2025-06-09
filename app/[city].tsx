@@ -1,3 +1,4 @@
+import { API_KEY } from '@env';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
@@ -54,7 +55,7 @@ const WeatherDetails = () => {
       const getWeather = async () => {
         try {
           const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=dubai&appid=REMOVED_API&units=metric`
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
           );
           const data = await response.json();
           setWeather(data);
