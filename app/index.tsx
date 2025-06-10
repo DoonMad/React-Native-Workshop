@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getCityFromCoords, requestLocationPermission } from '../api/weather';
+import { requestLocationPermission } from '../api/weather';
 
 export default function Index() {
   const [city, setCity] = useState('');
@@ -15,9 +15,13 @@ export default function Index() {
       setError('');
       const location = await requestLocationPermission();
       console.log(location.coords.latitude, location.coords.longitude);
-      const cityName = await getCityFromCoords(location.coords.latitude, location.coords.longitude);
-      console.log(cityName);
-      router.push(`/${cityName}`);
+      // const cityName = await getCityFromCoords(location.coords.latitude, location.coords.longitude);
+      // console.log(cityName);
+      // router.push(`/${cityName}`);
+      router.push({
+        pathname: './weather',
+        params: { lat: location.coords.latitude, lon: location.coords.longitude },
+      });
     } catch (err: any) {
       setError(err.message);
     } finally {

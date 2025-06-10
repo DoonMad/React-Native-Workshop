@@ -1,12 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { router, Stack, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { fetchWeatherByCity, WeatherData } from '../api/weather';
+import { fetchWeatherByCoords, WeatherData } from '../api/weather';
 
 const WeatherDetails = () => {
-  const { city } = useLocalSearchParams();
+  const { lat, lon } = useLocalSearchParams();
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -16,7 +16,8 @@ const WeatherDetails = () => {
       try {
         setLoading(true);
         setError('');
-        const data = await fetchWeatherByCity(city as string);
+        const data = await fetchWeatherByCoords(parseFloat(lat.toString()), parseFloat(lon.toString()));
+        if(!data) throw Error;
         setWeather(data);
       } catch (err: any) {
         setError(err.message);
@@ -26,14 +27,17 @@ const WeatherDetails = () => {
     };
 
     loadWeather();
-  }, [city]);
+  }, [lat, lon]);
 
   const formatTime = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   const handleRefresh = () => {
-    router.replace(`/${city}`);
+    router.replace({
+        pathname: './weather',
+        params: { lat: lat, lon: lon },
+    });
   };
 
   if (loading) {
@@ -58,13 +62,13 @@ const WeatherDetails = () => {
 
   return (
     <LinearGradient colors={['#1a73e8', '#6ec6ff']} style={styles.container}>
-      <Stack.Screen 
+      {/* <Stack.Screen 
         options={{
-          title: `Weather in ${city.toString().toUpperCase()}`,
+          title: `Weather in ${weather?.name.toString().toUpperCase()}`,
           headerStyle: { backgroundColor: '#1a73e8' },
           headerTintColor: '#fff',
         }}
-      />
+      /> */}
 
       <View style={styles.content}>
         <View style={styles.locationContainer}>
