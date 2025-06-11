@@ -40,6 +40,8 @@ export default function Index() {
       `Your BMI is ${bmi.toFixed(2)}. You are ${status}.`,
       [{ text: "OK" }]
     );
+    setHeight("");
+    setWeight("");
   };
 
   return (
@@ -66,7 +68,7 @@ export default function Index() {
           <Icon name="weight-kilogram" size={24} color="#fff" style={styles.icon} />
           <TextInput 
             placeholder="Enter weight in kg"
-            placeholderTextColor="#ccc"
+            placeholderTextColor="#aaa"
             value={weight}
             onChangeText={setWeight}
             keyboardType="numeric"
