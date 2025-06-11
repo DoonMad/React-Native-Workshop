@@ -43,6 +43,7 @@ export default function Index() {
         pathname: '/weather',
         params: { lat, lon }
       });
+      setCity("");
     } catch (err: any) {
       setError(err.message);
     } finally {
