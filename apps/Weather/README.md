@@ -1,50 +1,64 @@
-# Welcome to your Expo app 👋
+# 🌦️ Weather App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A sleek and minimal Weather App built using **React Native with Expo** and **Expo Router**, designed to demonstrate practical usage of APIs, location access, and multi-screen navigation.
 
-## Get started
+## 🚀 Features
 
-1. Install dependencies
+* Shows current weather based on user location.
+* Users can also manually search weather by city name.
+* Clean, responsive UI with animated icons and colorful components.
+* Uses OpenWeatherMap API for real-time data.
+
+## 🛠️ Technologies Used
+
+* React Native
+* Expo
+* Expo Router
+* Expo Linear Gradient
+* Expo Location
+* OpenWeatherMap API
+
+## 📦 Installation
+
+1. Clone the repo:
+
+   ```bash
+   git clone https://github.com/DoonMad/react-native-workshop.git
+   ```
+2. Navigate to the app directory:
+
+   ```bash
+   cd react-native-workshop/apps/weather
+   ```
+3. Install dependencies:
 
    ```bash
    npm install
    ```
+4. Add your `.env` file:
 
-2. Start the app
+   ```env
+   API_KEY='your_api_key_here'
+   ```
+5. Start the app:
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## 📚 Workshop Context
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+This app was built as part of a hands-on workshop to teach:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+* Fetching data from public APIs
+* Using geolocation in React Native
+* Multi-screen navigation using Expo Router
+* Managing app secrets with environment variables
 
-## Get a fresh project
+## 📄 License
 
-When you're ready, run:
+MIT License.
 
-```bash
-npm run reset-project
-```
+---
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+*Created with ☀️ by Apoorva Mundada.*

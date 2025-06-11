@@ -1,50 +1,57 @@
-# Welcome to your Expo app 👋
+# 🧮 BMI Calculator App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a simple Body Mass Index (BMI) Calculator built using **React Native with Expo**. It was created as part of a hands-on workshop at IIIT Nagpur aimed at helping beginners learn React Native.
 
-## Get started
+## 🚀 Features
 
-1. Install dependencies
+* Enter your weight (kg) and height (cm) to calculate BMI.
+* Displays BMI value and category (e.g., Underweight, Normal, Overweight, Obese).
+* Clean and minimal UI.
+
+## 📱 Screenshots
+
+*Add screenshots here if available.*
+
+## 🛠️ Technologies Used
+
+* React Native
+* Expo
+
+## 📦 Installation
+
+1. Clone the repo:
+
+   ```bash
+   git clone https://github.com/DoonMad/react-native-workshop.git
+   ```
+2. Navigate to the app directory:
+
+   ```bash
+   cd react-native-workshop/BMI-Calculator
+   ```
+3. Install dependencies:
 
    ```bash
    npm install
    ```
-
-2. Start the app
+4. Start the app:
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## 📚 Workshop Context
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+This app was used in a beginner-friendly hands-on workshop to:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+* Demonstrate basic layout and styling in React Native.
+* Introduce state management with `useState`.
+* Teach handling user input and displaying computed values.
 
-## Get a fresh project
+## 📄 License
 
-When you're ready, run:
+MIT License.
 
-```bash
-npm run reset-project
-```
+---
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+*Developed with ❤️ by Apoorva Mundada.*
