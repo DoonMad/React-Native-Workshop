@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AirPollutionData, fetch5DayForecast, fetchAirPollution, fetchWeatherByCoords, ForecastData, WeatherData } from '../api/weather';
 
@@ -118,6 +118,7 @@ const WeatherDetails = () => {
 
   return (
     <LinearGradient colors={['#1a73e8', '#6ec6ff']} style={styles.container}>
+      <StatusBar barStyle={'light-content'} />
       <ScrollView contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >

@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Button, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fetchCityCoordinates, requestLocationPermission } from '../api/weather';
 
@@ -53,8 +53,8 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle={'dark-content'} />
       <Text style={styles.header}>🌤️ Weather App</Text>
-      
       <TouchableOpacity 
         style={styles.locationButton}
         onPress={handleGetLocationWeather}
