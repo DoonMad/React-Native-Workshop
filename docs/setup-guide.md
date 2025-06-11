@@ -106,7 +106,7 @@ These will be installed via `npm install`, buthere are the main ones we’ll be 
 For the Weather App, we might use a starter template to skip boilerplate setup:
 
 ```bash
-cd react-native-workshop/apps/weather-starter-template
+cd react-native-workshop/starter-template/weather-starter-template
 npm install
 ```
 
