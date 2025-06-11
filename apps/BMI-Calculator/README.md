@@ -10,7 +10,9 @@ This is a simple Body Mass Index (BMI) Calculator built using **React Native wit
 
 ## 📱 Screenshots
 
-*Add screenshots here if available.*
+<div align="center">
+  <img src="./assets/screenshots/index.jpg" alt="Home Screen" width="45%" style="margin-right: 10px;" />
+</div>
 
 ## 🛠️ Technologies Used
 

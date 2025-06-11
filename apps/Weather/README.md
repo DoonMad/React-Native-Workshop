@@ -9,6 +9,14 @@ A sleek and minimal Weather App built using **React Native with Expo** and **Exp
 * Clean, responsive UI with animated icons and colorful components.
 * Uses OpenWeatherMap API for real-time data.
 
+## 📱 Screenshots
+
+<div align="center">
+  <img src="./assets/screenshots/index.jpg" alt="Home Screen" width="45%" style="margin-right: 10px;" />
+  <img src="./assets/screenshots/weather.jpg" alt="Search Screen" width="45%" />
+</div>
+
+
 ## 🛠️ Technologies Used
 
 * React Native
