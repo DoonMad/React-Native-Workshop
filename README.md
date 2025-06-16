@@ -81,8 +81,8 @@ Participants will also get a walkthrough on:
 * [Setup Guide](./docs/setup-guide.md)
 * [Workshop Outline](./docs/workshop-outline.md)
 * [Starter Template for Weather App](./starter-template/)
-* [Weather App Code](.apps/weather)
-* [BMI Calculator Code](.apps/bmi-calculator)
+* [Weather App Code](./apps/Weather)
+* [BMI Calculator Code](./apps/BMI-Calculator)
 
 More to be added post event (like feedback, photos, certificate, etc.)
 
