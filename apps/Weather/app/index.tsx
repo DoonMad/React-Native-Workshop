@@ -14,7 +14,7 @@ export default function Index() {
       setLoading(true);
       setError('');
       const location = await requestLocationPermission();
-      console.log(location.coords.latitude, location.coords.longitude);
+      // console.log(location.coords.latitude, location.coords.longitude);
       // const cityName = await getCityFromCoords(location.coords.latitude, location.coords.longitude);
       // console.log(cityName);
       // router.push(`/${cityName}`);
