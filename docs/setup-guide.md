@@ -23,6 +23,7 @@ Git is a version control system that helps you manage your code. We’ll use it 
 
 * Visit [https://git-scm.com/downloads](https://git-scm.com/downloads)
 * Install Git based on your OS (Windows/Mac/Linux)
+* [Video guide on installing git](https://www.youtube.com/watch?v=t2-l3WvWvqg)
 
 To check if it's installed correctly:
 
@@ -39,6 +40,7 @@ Node.js is needed to run JavaScript outside the browser, and npm is its package 
 **Download Node.js (LTS version)**:
 
 * [https://nodejs.org](https://nodejs.org)
+* [Video guide on installing Node.js](https://www.youtube.com/watch?v=lt5D2EWZMN0)
 
 To verify installation:
 
@@ -76,6 +78,8 @@ Install **Expo Go** from the Play Store or App Store on your smartphone.
 Recommended for writing and testing code.
 
 * Download: [https://code.visualstudio.com](https://code.visualstudio.com)
+* [Video guide on installing VS Code](https://www.youtube.com/watch?v=DoLYVXR9SSc)
+
 
 ---
 
@@ -85,6 +89,8 @@ If you want to run your app on a virtual Android phone:
 
 * Download: [https://developer.android.com/studio](https://developer.android.com/studio)
 * Install Android Emulator and follow setup instructions.
+* [Video guide on installing Android Studio](https://www.youtube.com/watch?v=AGmoCiMNBFw)
+
 
 ---
 
