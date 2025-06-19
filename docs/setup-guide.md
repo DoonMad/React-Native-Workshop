@@ -15,7 +15,17 @@ We’ll be using GitHub to understand version control and push our apps online.
 
 ---
 
-## 🧰 2. Install Git
+## ☁️ 2. Create an OpenWeatherMap Account
+
+To access weather data via their API, you need an account on OpenWeatherMap:
+
+* Go to [https://openweathermap.org/api](https://openweathermap.org/api)
+* Sign up and verify your email.
+* You'll use your account to generate an API key.
+
+---
+
+## 🧰 3. Install Git
 
 Git is a version control system that helps you manage your code. We’ll use it throughout the workshop.
 
@@ -31,9 +41,33 @@ To check if it's installed correctly:
 git --version
 ```
 
+### 🔐 Set Up Git and GitHub SSH Connection (Optional but Recommended)
+
+If you want to push code securely without entering your GitHub password every time:
+
+1. Generate an SSH key (if you don’t already have one):
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+2. Copy your SSH public key:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+3. Go to your GitHub [SSH settings](https://github.com/settings/ssh) and add the key.
+
+4. Now you can clone and push using SSH:
+
+```bash
+git clone git@github.com:your-username/your-repo.git
+```
+
 ---
 
-## 🖥️ 3. Install Node.js and npm
+## 🖥️ 4. Install Node.js and npm
 
 Node.js is needed to run JavaScript outside the browser, and npm is its package manager.
 
@@ -51,7 +85,7 @@ npm -v
 
 ---
 
-## 🧪 4. Install Expo CLI
+## 🧪 5. Install Expo CLI
 
 We’re using Expo to simplify the development process.
 
@@ -67,23 +101,22 @@ expo --version
 
 ---
 
-## 📱 5. Install Expo Go App (for phone testing)
+## 📱 6. Install Expo Go App (for phone testing)
 
 Install **Expo Go** from the Play Store or App Store on your smartphone.
 
 ---
 
-## 💻 6. Code Editor: VS Code
+## 💻 7. Code Editor: VS Code
 
 Recommended for writing and testing code.
 
 * Download: [https://code.visualstudio.com](https://code.visualstudio.com)
 * [Video guide on installing VS Code](https://www.youtube.com/watch?v=DoLYVXR9SSc)
 
-
 ---
 
-## 📲 7. Android Studio (Optional - For Emulator)
+## 📲 8. Android Studio (Optional - For Emulator)
 
 If you want to run your app on a virtual Android phone:
 
@@ -91,12 +124,11 @@ If you want to run your app on a virtual Android phone:
 * Install Android Emulator and follow setup instructions.
 * [Video guide on installing Android Studio](https://www.youtube.com/watch?v=AGmoCiMNBFw)
 
-
 ---
 
-## 📦 8. Required Libraries
+## 📦 9. Required Libraries
 
-These will be installed via `npm install`, buthere are the main ones we’ll be using:
+These will be installed via `npm install`, but here are the main ones we’ll be using:
 
 **Weather App**:
 
@@ -107,7 +139,7 @@ These will be installed via `npm install`, buthere are the main ones we’ll be 
 
 ---
 
-## 🚀 9. Cloning Starter Template (Optional)
+## 🚀 10. Cloning Starter Template (Optional)
 
 For the Weather App, we might use a starter template to skip boilerplate setup:
 

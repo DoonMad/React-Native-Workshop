@@ -111,4 +111,5 @@ I’m Apoorva Mundada, a developer passionate about building fun and impactful a
 
 ## ⭐ Give It a Star!
 
-If you liked this project or found it useful, don’t forget to **star** ⭐ this repo. It helps others find it and supports my work!
+If you found this workshop helpful or enjoyed the apps we built, please consider giving this repo a ⭐ **star!**
+It helps others discover the project and **saves it to your account** for future reference.
