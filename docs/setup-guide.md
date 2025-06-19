@@ -41,30 +41,6 @@ To check if it's installed correctly:
 git --version
 ```
 
-### 🔐 Set Up Git and GitHub SSH Connection (Optional but Recommended)
-
-If you want to push code securely without entering your GitHub password every time:
-
-1. Generate an SSH key (if you don’t already have one):
-
-```bash
-ssh-keygen -t ed25519 -C "your_email@example.com"
-```
-
-2. Copy your SSH public key:
-
-```bash
-cat ~/.ssh/id_ed25519.pub
-```
-
-3. Go to your GitHub [SSH settings](https://github.com/settings/ssh) and add the key.
-
-4. Now you can clone and push using SSH:
-
-```bash
-git clone git@github.com:your-username/your-repo.git
-```
-
 ---
 
 ## 🖥️ 4. Install Node.js and npm
